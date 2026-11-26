@@ -10,22 +10,12 @@ CMD*/
 var rawText = String(message || "").trim();
 if (!rawText) { return; }
 
-// The master (*) command can also receive slash commands.
-// Do not send the generic link prompt after /start or other commands.
-if (rawText.charAt(0) === "/") {
-  var commandText = rawText.split(/\s+/)[0].toLowerCase();
-  if (commandText === "/download" || commandText === "/dl") {
-    Bot.sendInlineKeyboard([
-      { title: "🌐 Supported Sources", command: "/supported" },
-      { title: "📊 Service Status", command: "/status" },
-      { title: "🏠 Main Menu", command: "/menu" }
-    ], "📥 *Send your video link directly*\n\nNo extra command is needed after this. Paste a public direct HTTPS .mp4 file link into this chat.\n\nFacebook/Instagram post links can be detected, but their media extraction is not available in this Bots.Business-only build yet.\n\n⚠️ Only save content you own or have permission to download.");
-  }
-  return;
-}
-
-// Ignore ordinary chat text without a URL; only react when a link is present.
+// Find a URL anywhere in the message, including after a slash command
+// such as /start https://example.com/video.mp4 or /help https://...
 var match = rawText.match(/https?:\/\/[^\s]+/i);
+
+// Commands without a URL are left to their own command handlers.
+// Ordinary text without a URL is ignored.
 if (!match) { return; }
 
 var videoUrl = match[0].replace(/[),.!?]+$/, "");
