@@ -1,17 +1,25 @@
 /*CMD
   command: /supported
-  help: Show supported video sources
+  help: Check supported platforms
   need_reply: false
-  auto_retry_time: 
-  answer: 
-  keyboard: 
-  aliases: 
+  auto_retry_time:
+  answer:
+  keyboard:
+  aliases: /sources
 CMD*/
 
-Bot.sendMessage(
-  "🌐 *Supported sources*\n\n" +
-  "• Direct public video links — planned first.\n" +
-  "• Facebook public links — pending integration and testing.\n" +
-  "• Instagram public links — pending integration and testing.\n\n" +
-  "YouTube and other sources are not enabled. Support will be announced only after a working, permitted integration is tested."
+var buttons = [
+  { title: "📥 Submit a Link", command: "/download" },
+  { title: "📊 Service Status", command: "/status" },
+  { title: "🏠 Main Menu", command: "/menu" }
+];
+
+Bot.sendInlineKeyboard(
+  buttons,
+  "🌐 *Supported Sources & Availability*\n\n" +
+  "🔵 *Facebook*\nPublic video/Reel link recognition: available\nDownloader integration: pending testing\n\n" +
+  "🟣 *Instagram*\nPublic Reel/post link recognition: available\nDownloader integration: pending testing\n\n" +
+  "🔗 *Direct video URL*\nURL recognition: available\nMedia processing: not connected yet\n\n" +
+  "▶️ *YouTube and other platforms*\nNot enabled.\n\n" +
+  "⚠️ The bot will only claim a source is downloadable after the complete process has been integrated and tested. Never send private or restricted links."
 );
