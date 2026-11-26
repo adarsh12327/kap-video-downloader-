@@ -1,6 +1,6 @@
 /*CMD
   command: /download
-  help: Start automatic link handling
+  help: Legacy alias; send a video URL with any message or command
   need_reply: false
   auto_retry_time:
   answer:
@@ -8,12 +8,7 @@
   aliases: /dl
 CMD*/
 
-Bot.sendInlineKeyboard([
-  { title: "🌐 Supported Sources", command: "/supported" },
-  { title: "📊 Service Status", command: "/status" },
-  { title: "🏠 Main Menu", command: "/menu" }
-], "📥 *Send your video link directly*\n\n" +
-  "No extra command is needed. Just paste a link in this chat.\n\n" +
-  "🟢 Direct HTTPS MP4 file links can be sent through Telegram.\n" +
-  "🟡 Facebook/Instagram post links are detected, but their video extraction is not available in this Bots.Business-only version.\n\n" +
-  "⚠️ Only send public links for content you own or have permission to save."
+// Intentionally silent.
+// The master (*) handler processes URLs wherever they appear,
+// including messages such as /download https://example.com/video.mp4.
+// No separate /download prompt is required.
