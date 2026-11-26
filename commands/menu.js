@@ -7,11 +7,11 @@
   keyboard:
   aliases: /home
 CMD*/
+
 Bot.sendInlineKeyboard([
-  {title:"📥 Download",command:"/download"},
-  {title:"🌐 Supported Sources",command:"/supported"},
-  {title:"📊 Status",command:"/status"},
-  {title:"📖 Help",command:"/help"},
-  {title:"ℹ️ About",command:"/about"},
-  {title:"🔐 Privacy",command:"/privacy"}
-],"🎬 *KAP VIDEO DOWNLOADER*\n\nChoose an option below. You can also send a public video link directly in this chat.");
+  { title: "🌐 Supported Sources", command: "/supported" },
+  { title: "📊 Status", command: "/status" },
+  { title: "📖 Help", command: "/help" },
+  { title: "ℹ️ About", command: "/about" },
+  { title: "🔐 Privacy", command: "/privacy" }
+], "🎬 *KAP VIDEO DOWNLOADER*\n\n📎 Send a public video link directly in this chat. No download command is required.\n\nThe current build can request Telegram to fetch direct public HTTPS MP4 files.");
