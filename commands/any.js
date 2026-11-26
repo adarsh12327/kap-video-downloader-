@@ -27,9 +27,14 @@ if (host.indexOf("@") !== -1) {
   return;
 }
 
-var hostname = host.replace(/^\[/, "").replace(/\](:[0-9]+)?$/, "").replace(/:[0-9]+$/, "");
+var hostname = host;
+if (hostname.charAt(0) === "[") {
+  var closingBracket = hostname.indexOf("]");
+  hostname = closingBracket > 0 ? hostname.substring(1, closingBracket) : hostname;
+} else {
+  hostname = hostname.replace(/:[0-9]+$/, "");
+}
 var lowerHost = hostname.toLowerCase();
-var lowerUrl = videoUrl.toLowerCase();
 
 function isDomain(domain) {
   return lowerHost === domain || lowerHost.slice(-(domain.length + 1)) === "." + domain;
