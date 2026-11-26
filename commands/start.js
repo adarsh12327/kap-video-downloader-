@@ -5,7 +5,7 @@
   auto_retry_time:
   answer:
   keyboard:
-  aliases: /home
+  aliases:
 CMD*/
 
 var firstName = user.first_name || "there";
