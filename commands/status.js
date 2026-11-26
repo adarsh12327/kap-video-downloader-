@@ -7,8 +7,16 @@
   keyboard:
   aliases: /health
 CMD*/
+
 Bot.sendInlineKeyboard([
-  {title:"🌐 Supported Sources",command:"/supported"},
-  {title:"📥 Download",command:"/download"},
-  {title:"🏠 Main Menu",command:"/menu"}
-],"📊 *KAP Service Status*\n\n🟢 Telegram connection: working\n🟢 Bots.Business commands: responding\n🟢 GitHub source repository: configured\n🟡 Link recognition: basic detection only\n🔴 Video processing engine: not connected\n\nWe will update this page after the downloader is integrated and successfully tested.");
+  { title: "🌐 Supported Sources", command: "/supported" },
+  { title: "📥 Send a Link", command: "/download" },
+  { title: "🏠 Main Menu", command: "/menu" }
+], "📊 *KAP Service Status*\n\n" +
+  "🟢 Telegram bot connection: working\n" +
+  "🟢 Bots.Business command runtime: responding\n" +
+  "🟢 Automatic link detection: configured\n" +
+  "🟢 Direct HTTPS MP4 send: configured; live test required\n" +
+  "🟡 Facebook/Instagram post extraction: not available in Bots.Business-only mode\n" +
+  "🔴 YouTube: disabled\n\n" +
+  "A successful download is confirmed only when Telegram sends the video successfully."
