@@ -10,13 +10,12 @@ CMD*/
 
 Bot.sendInlineKeyboard([
   { title: "🌐 Supported Sources", command: "/supported" },
-  { title: "📥 Send a Link", command: "/download" },
+  { title: "📖 Help", command: "/help" },
   { title: "🏠 Main Menu", command: "/menu" }
 ], "📊 *KAP Service Status*\n\n" +
-  "🟢 Telegram bot connection: working\n" +
-  "🟢 Bots.Business command runtime: responding\n" +
-  "🟢 Automatic link detection: configured\n" +
-  "🟢 Direct HTTPS MP4 send: configured; live test required\n" +
-  "🟡 Facebook/Instagram post extraction: not available in Bots.Business-only mode\n" +
-  "🔴 YouTube: disabled\n\n" +
-  "A successful download is confirmed only when Telegram sends the video successfully."
+  "🟢 Bots.Business command scripts: configured.\n" +
+  "🟢 Automatic URL detection: configured through the * command.\n" +
+  "🟡 Direct HTTPS MP4 delivery: Telegram sendVideo flow configured; live success test pending.\n" +
+  "🟡 Facebook/Instagram extraction: not connected.\n" +
+  "🔴 YouTube: not supported.\n\n" +
+  "A download is confirmed only when Telegram successfully sends the video.");
