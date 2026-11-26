@@ -9,12 +9,12 @@
 CMD*/
 
 Bot.sendInlineKeyboard([
-  { title: "📥 Send a Link", command: "/download" },
+  { title: "📖 Help", command: "/help" },
   { title: "📊 Service Status", command: "/status" },
   { title: "🏠 Main Menu", command: "/menu" }
 ], "🌐 *KAP Supported Sources*\n\n" +
-  "🟢 *Direct HTTPS MP4*\nTelegram fetch-and-send: enabled (subject to Telegram file/URL limits).\n\n" +
-  "🟡 *Facebook public video/Reels*\nLink detection: enabled. Post-to-video extraction: not available in this Bots.Business-only build.\n\n" +
-  "🟡 *Instagram public Reels/posts*\nLink detection: enabled. Post-to-video extraction: not available in this Bots.Business-only build.\n\n" +
-  "🔴 *YouTube*\nNot enabled.\n\n" +
-  "⚠️ Private, login-protected, DRM-protected and restricted content is not supported. Only save content you own or have permission to download."
+  "🟢 *Direct HTTPS MP4 file links*\nDetection: enabled. Telegram fetch-and-send: configured; a live successful test is still required.\n\n" +
+  "🟡 *Facebook public videos/Reels*\nDetection: enabled. Extracting the actual media from a post URL: not connected in this Bots.Business-only build.\n\n" +
+  "🟡 *Instagram public Reels/posts*\nDetection: enabled. Extracting the actual media from a post URL: not connected in this Bots.Business-only build.\n\n" +
+  "🔴 *YouTube*\nNot supported.\n\n" +
+  "Telegram must be able to access the direct MP4 URL. File size, format and remote-host restrictions apply. Private, login-protected and DRM-protected content is not supported.");
