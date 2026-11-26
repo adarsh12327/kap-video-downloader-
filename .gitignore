@@ -5,6 +5,6 @@
 
 # Dependencies and runtime output
 node_modules/
- npm-debug.log*
+npm-debug.log*
 *.log
 .DS_Store
