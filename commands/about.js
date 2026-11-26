@@ -6,8 +6,14 @@
   answer:
   keyboard:
 CMD*/
+
 Bot.sendInlineKeyboard([
-  {title:"🌐 Supported Sources",command:"/supported"},
-  {title:"🔐 Privacy",command:"/privacy"},
-  {title:"🏠 Main Menu",command:"/menu"}
-],"ℹ️ *About KAP Video Downloader*\n\nKAP Video Downloader is designed to identify supported public video links and, after integration, process content users are authorized to save.\n\n🎯 Initial focus: Facebook and Instagram public video links.\n🛠️ Platform: Bots.Business.\n📦 Source code: GitHub.\n\nThe downloader engine is still under integration. A platform will be marked fully supported only after real tests.");
+  { title: "🌐 Supported Sources", command: "/supported" },
+  { title: "🔐 Privacy", command: "/privacy" },
+  { title: "🏠 Main Menu", command: "/menu" }
+], "ℹ️ *About KAP Video Downloader*\n\n" +
+  "KAP Video Downloader is a Telegram bot hosted on Bots.Business.\n\n" +
+  "🟢 Direct HTTPS MP4 links: Telegram fetch-and-send flow configured.\n" +
+  "🟡 Facebook/Instagram post links: detection available; media extraction not connected.\n" +
+  "🔴 YouTube: disabled.\n\n" +
+  "The bot does not bypass private-account restrictions, login protections, DRM or paywalls. Use it only for content you own or are authorized to save."
