@@ -8,18 +8,13 @@
   aliases: /sources
 CMD*/
 
-var buttons = [
-  { title: "📥 Submit a Link", command: "/download" },
+Bot.sendInlineKeyboard([
+  { title: "📥 Send a Link", command: "/download" },
   { title: "📊 Service Status", command: "/status" },
   { title: "🏠 Main Menu", command: "/menu" }
-];
-
-Bot.sendInlineKeyboard(
-  buttons,
-  "🌐 *Supported Sources & Availability*\n\n" +
-  "🔵 *Facebook*\nPublic video/Reel link recognition: available\nDownloader integration: pending testing\n\n" +
-  "🟣 *Instagram*\nPublic Reel/post link recognition: available\nDownloader integration: pending testing\n\n" +
-  "🔗 *Direct video URL*\nURL recognition: available\nMedia processing: not connected yet\n\n" +
-  "▶️ *YouTube and other platforms*\nNot enabled.\n\n" +
-  "⚠️ The bot will only claim a source is downloadable after the complete process has been integrated and tested. Never send private or restricted links."
-);
+], "🌐 *KAP Supported Sources*\n\n" +
+  "🟢 *Direct HTTPS MP4*\nTelegram fetch-and-send: enabled (subject to Telegram file/URL limits).\n\n" +
+  "🟡 *Facebook public video/Reels*\nLink detection: enabled. Post-to-video extraction: not available in this Bots.Business-only build.\n\n" +
+  "🟡 *Instagram public Reels/posts*\nLink detection: enabled. Post-to-video extraction: not available in this Bots.Business-only build.\n\n" +
+  "🔴 *YouTube*\nNot enabled.\n\n" +
+  "⚠️ Private, login-protected, DRM-protected and restricted content is not supported. Only save content you own or have permission to download."
