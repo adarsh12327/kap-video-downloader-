@@ -1,42 +1,41 @@
 # KAP Video Downloader
 
-A Telegram bot project focused on identifying public Facebook and Instagram video links and, after a permitted processing integration is connected, helping users save content they own or are authorized to download.
+Telegram bot hosted on **Bots.Business**, with command source maintained in GitHub.
 
 ## Architecture
 
-- **GitHub** is the source of truth for command files and documentation.
 - **Bots.Business** hosts the Telegram bot and executes BJS command scripts.
-- **Downloader service** is a separate integration and is not connected yet.
+- **GitHub** stores the command source and documentation.
+- No Railway or separately hosted backend is used by this build.
 
-## Current bot features
+## Features
 
-- `/start` and `/menu` professional inline menu
-- `/download` link submission instructions
-- `/supported` source availability
-- `/status` honest service status
-- `/help`, `/about`, and `/privacy`
-- Basic HTTP/HTTPS link recognition and Facebook/Instagram/YouTube domain classification
-- Clear messaging that link recognition is not the same as downloading
+- /start and /menu inline navigation
+- /help, /supported, /status, /about, and /privacy
+- Catch-all * command for automatic text-link detection (verify the special-command trigger in the live Bots.Business bot)
+- Facebook and Instagram post URL detection with clear unsupported status
+- Direct HTTPS .mp4 URL handling through Telegram sendVideo
+- Telegram success/error callbacks for the direct video send
+- URL checks for HTTPS, MP4 extension, and obvious local/private hostnames
 
-## Current source status
+## Source availability
 
-| Source | Recognition | Download processing |
+| Source | Detection | Download/send |
 |---|---|---|
-| Facebook public links | Basic domain detection | Not connected |
-| Instagram public links | Basic domain detection | Not connected |
-| Direct video URLs | HTTP/HTTPS detection only | Not connected |
-| YouTube | Recognized as YouTube | Not enabled |
+| Direct HTTPS MP4 URL | Yes | Configured via Telegram sendVideo; live test required |
+| Facebook public video/Reels page | Yes | Not available in this Bots.Business-only build |
+| Instagram public Reels/posts page | Yes | Not available in this Bots.Business-only build |
+| YouTube | Yes | Disabled |
 
-Do not advertise a source as downloadable until the full permitted processing flow has been integrated and tested.
+A Facebook or Instagram post URL is a webpage, not a direct media file. Bots.Business' built-in Telegram API can send an accessible media URL, but it does not extract the media URL from those social post pages. Do not mark these sources as downloadable until an authorized media extraction service is connected and tested.
 
-## Next engineering phase
+## Important technical notes
 
-1. Choose a permitted downloader API/backend that supports the intended public sources.
-2. Add a secure HTTPS integration endpoint.
-3. Store API credentials only in the hosting platform's secret settings.
-4. Add URL validation, timeouts, file-size limits, abuse protection and clear failure messages.
-5. Test with content the operator owns or has permission to save.
-6. Only then update `/supported` and `/status` to show active download support.
+- Telegram must be able to fetch the direct MP4 URL. A webpage URL that does not serve an MP4 file will fail.
+- Telegram file-size, media-format, and remote-host restrictions apply.
+- Bots.Business HTTP requests use callback commands and have a short fixed timeout; this project does not make a long-running download request from BJS.
+- The * special command should be verified in the live bot to ensure it receives ordinary user text without intercepting named commands.
+- Importing from Git replaces commands and installed libraries in the destination bot. Back up the bot or test in a disposable bot first.
 
 ## Safety and privacy
 
@@ -44,7 +43,3 @@ Do not advertise a source as downloadable until the full permitted processing fl
 - Do not bypass private-account restrictions, login protections, DRM, paywalls or other access controls.
 - Never ask users for passwords, OTPs, cookies or session tokens.
 - Never commit Telegram tokens, API keys, cookies or credentials to GitHub.
-
-## Bots.Business Git import
-
-The repository contains BJS command files under `commands/` and a `bot.json` manifest. Importing from Git replaces the destination bot's existing commands and installed libraries. Back up the bot or test in a disposable bot before importing.
