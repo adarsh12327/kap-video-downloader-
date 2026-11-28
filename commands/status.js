@@ -13,9 +13,8 @@ Bot.sendInlineKeyboard([
   { title: "📖 Help", command: "/help" },
   { title: "🏠 Main Menu", command: "/menu" }
 ], "📊 *KAP Service Status*\n\n" +
-  "🟢 Bots.Business command scripts: configured.\n" +
-  "🟢 Automatic URL detection: configured through the * command.\n" +
-  "🟡 Direct HTTPS MP4 delivery: Telegram sendVideo flow configured; live success test pending.\n" +
-  "🟡 Facebook/Instagram extraction: not connected.\n" +
-  "🔴 YouTube: not supported.\n\n" +
-  "A download is confirmed only when Telegram successfully sends the video.");
+  "🟢 Bots.Business link detection: configured.\n" +
+  "🟢 Secure Vercel backend source: added to GitHub.\n" +
+  "🟡 FastSaver and Telegram credentials: awaiting secure environment setup.\n" +
+  "🟡 Live download test: pending.\n\n" +
+  "The service is fully ready only after Vercel environment variables and Bots.Business properties are configured and a test download succeeds.");
