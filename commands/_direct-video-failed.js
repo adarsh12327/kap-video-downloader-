@@ -2,9 +2,12 @@
   command: /direct-video-failed
   help: Handle direct video send failure
   need_reply: false
-  auto_retry_time:
-  answer:
-  keyboard:
+  auto_retry_time: 
+  folder: 
+  answer: 
+  keyboard: 
+  aliases: 
+  group: 
 CMD*/
 
 if (!options || !options.error) { return; }

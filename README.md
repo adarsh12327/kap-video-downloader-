@@ -1,61 +1,84 @@
-# KAP Video Downloader
+# KAP Video Downloader - chat bot
+It is repository for chat bot: [@KAP Video Downloader](https://t.me/KAP Video Downloader)
 
-Telegram bot source for Bots.Business with a secure Vercel server-side bridge to FastSaver.
+## What it is?
+This repository can be imported to [Bots.Business](https://bots.business) as a worked chat bot.
 
-## Architecture
+[Bots.Business](https://bots.business) - it is probably the first CBPaaS - Chat Bot Platform as a Service.
 
-- Bots.Business receives Telegram messages and detects supported links automatically.
-- Vercel Node.js Function validates the request, calls FastSaver, and sends the resulting media to Telegram.
-- FastSaver and Telegram credentials are stored only as Vercel environment variables.
-- GitHub contains source code only; never commit API keys, bot tokens, or shared secrets.
+A CBPaaS is a cloud-based platform that enables developers to create chatbots without needing to build backend infrastructure.
 
-## Supported links through FastSaver
+## Create your own bot for Telegram from this Git repo
 
-The documented FastSaver `GET /v1/fetch` endpoint supports Instagram, TikTok, Pinterest, Facebook, X/Twitter, RuTube and Likee. YouTube uses `POST /v1/youtube/download`. Platform coverage and provider availability can change; private, deleted, login-protected, DRM-protected or restricted content is not bypassed.
+How to create bot?
+1. Create bot with [@BotFather](https://telegram.me/BotFather) and take Secret Token
+2. Create bot in App and add Secret Token
+3. Add Public Key from App as [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) with read access (and write access for bot exporting if you need it)
+4. Do import for this git repo
 
-The default YouTube format is 720p. The backend supports audio and 144p–2160p if a format is supplied in the API request.
+Now you can talk with yours new Telegram Bot
 
-## Required Vercel environment variables
+See [more](https://help.bots.business/getting-started)
 
-Set these in Vercel Project Settings → Environment Variables for Production and Preview:
+## Commands - in commands folder
+File name - it is command name (Bot it can be rewritten in command description)
 
-- `FASTSAVER_API_KEY` — FastSaver API key.
-- `TELEGRAM_BOT_TOKEN` — BotFather token for the same Telegram bot.
-- `BOT_SHARED_SECRET` — long random secret shared with Bots.Business.
-- `ADMIN_CHAT_ID` — optional admin Telegram chat ID for failure alerts.
+Command can have: `name`, `help`, `aliases` (second names), `answer`, `keyboard`, `scnarios` (for simple logic) and other options.
 
-Do not send these secrets in chat or commit them to GitHub.
+### Command description
+It is file header:
 
-## Required Bots.Business bot properties
+    /*CMD
+      command: /test
+      help: this is help for ccommand
+      need_reply: [ true or false here ]
+      auto_retry_time: [ time in sec ]
+      answer: it is example answer for /test command
+      keyboard: button1, button2
+      aliases: /test2, /test3
+    CMD*/
 
-Set these bot properties in Bots.Business:
+See [more](https://help.bots.business/commands)
 
-- `BACKEND_URL` — the Vercel project URL (no trailing slash).
-- `BACKEND_SHARED_SECRET` — exactly the same value as Vercel `BOT_SHARED_SECRET`.
+### Command body
+It is command code in JavaScript.
+Use Bot Java Script for logic in command.
 
-The catch-all `*` command automatically forwards supported public links to the backend. The backend sends the final media to Telegram, so the Bots.Business five-second HTTP callback does not have to wait for media extraction to finish.
+For example:
+> Bot.sendMessage(2+2);
+
+See [more](https://help.bots.business/scenarios-and-bjs)
+
+
+## Libraries - in libs folder
+You can store common code in the libs folder. File name - it is library name.
+
+For example code in myLib.js:
+
+    function hello(){ Bot.sendMessage("Hello from lib!") }
+    function goodbye(name){ Bot.sendMessage("Goodbye, " + name) }
+
+    publish({
+      sayHello: hello,
+      sayGoodbyeTo: goodbye
+    })
+
+then you can run in any bot's command:
+
+    Libs.myLib.hello()
+    Libs.myLib.sayGoodbyeTo("Alice")
+
+See [more](https://help.bots.business/git/library)
+
+## Other bots example
+See other bots examples in the [github](https://github.com/bots-business?utf8=✓&tab=repositories&q=&type=public&language=javascript) or in the [Bot Store](https://bots.business/)
+
+
+## Other help
+[Help.bots.business](https://help.bots.business)
 
 ## API
+See [API](https://api.bots.business/docs#/docs/summary)
 
-- `GET /api/health` — public health check.
-- `POST /api/download` — requires `X-Bot-Secret`; JSON body: `{ "url": "...", "chat_id": "..." }`.
 
-The download endpoint responds with HTTP 202 after scheduling background work. Vercel Function max duration is configured to 300 seconds. The function uses FastSaver's documented request patterns and Telegram Bot API sendPhoto/sendVideo/sendMediaGroup methods.
-
-## Setup checklist
-
-1. Link this GitHub repository to a Vercel project.
-2. Add the four Vercel environment variables above.
-3. Redeploy after adding environment variables.
-4. Set `BACKEND_URL` and `BACKEND_SHARED_SECRET` as Bots.Business bot properties.
-5. Sync the updated GitHub commands into Bots.Business.
-6. Test `/api/health`, then a public video link that you own or have permission to save.
-
-## Important limitations
-
-- FastSaver free tier currently documents 10 requests/minute and 1,000 starting credits; actual balances and limits are controlled by FastSaver.
-- A FastSaver download URL is temporary. The backend sends it to Telegram immediately.
-- Telegram may reject files that exceed its current Bot API limits or whose CDN does not permit remote fetching.
-- Vercel Hobby functions have plan-specific duration and usage limits. Heavy production traffic may require a paid plan.
-- This is a single-provider integration, not yet an 8–10-provider failover system.
-- No private-account, login, cookie, DRM, paywall or access-control bypass is implemented.
+![](https://bots.business/images/web-logo.png)

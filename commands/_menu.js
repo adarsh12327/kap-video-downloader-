@@ -2,10 +2,12 @@
   command: /menu
   help: Open the main menu
   need_reply: false
-  auto_retry_time:
-  answer:
-  keyboard:
+  auto_retry_time: 
+  folder: 
+  answer: 
+  keyboard: 
   aliases: /home
+  group: 
 CMD*/
 
 Bot.sendInlineKeyboard([

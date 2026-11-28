@@ -2,9 +2,12 @@
   command: /privacy
   help: Privacy and safe-use information
   need_reply: false
-  auto_retry_time:
-  answer:
-  keyboard:
+  auto_retry_time: 
+  folder: 
+  answer: 
+  keyboard: 
+  aliases: 
+  group: 
 CMD*/
 
 Bot.sendInlineKeyboard([

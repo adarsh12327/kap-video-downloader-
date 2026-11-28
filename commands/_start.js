@@ -2,10 +2,12 @@
   command: /start
   help: Open KAP Video Downloader
   need_reply: false
-  auto_retry_time:
-  answer:
-  keyboard:
-  aliases:
+  auto_retry_time: 
+  folder: 
+  answer: 
+  keyboard: 
+  aliases: 
+  group: 
 CMD*/
 
 var firstName = user && user.first_name ? user.first_name : "there";

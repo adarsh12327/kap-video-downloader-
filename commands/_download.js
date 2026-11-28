@@ -2,10 +2,12 @@
   command: /download
   help: Legacy alias; send a video URL with any message or command
   need_reply: false
-  auto_retry_time:
-  answer:
-  keyboard:
+  auto_retry_time: 
+  folder: 
+  answer: 
+  keyboard: 
   aliases: /dl
+  group: 
 CMD*/
 
 // Intentionally silent.

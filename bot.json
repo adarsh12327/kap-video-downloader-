@@ -1,6 +1,6 @@
 {
-  "bb_sync_version": "1.0",
-  "name": "KAP Video Downloader",
-  "git_remote": "git@github.com:adarsh12327/kap-video-downloader-.git",
-  "csv_url": null
+  "bb_sync_version":"1.0",
+  "name":"KAP Video Downloader",
+  "csv_url":null,
+  "git_remote":"git@github.com:adarsh12327/kap-video-downloader-.git"
 }
