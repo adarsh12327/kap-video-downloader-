@@ -1,72 +1,61 @@
 # KAP Video Downloader
 
-Telegram bot hosted on **Bots.Business**. GitHub stores the command source; Bots.Business runs the bot.
+Telegram bot source for Bots.Business with a secure Vercel server-side bridge to FastSaver.
 
-## Current architecture
+## Architecture
 
-- **Bots.Business** executes all Telegram bot commands.
-- **GitHub** stores the source and is used for Git Sync.
-- No Railway project or user-managed backend is required for the direct-MP4 feature.
+- Bots.Business receives Telegram messages and detects supported links automatically.
+- Vercel Node.js Function validates the request, calls FastSaver, and sends the resulting media to Telegram.
+- FastSaver and Telegram credentials are stored only as Vercel environment variables.
+- GitHub contains source code only; never commit API keys, bot tokens, or shared secrets.
 
-## User experience
+## Supported links through FastSaver
 
-- A user can paste a supported link directly into the chat.
-- The catch-all `*` command detects URLs in ordinary messages and in messages containing a command, such as `/help https://example.com/video.mp4`.
-- No `/download` command is required. The legacy `/download` and `/dl` commands are intentionally silent.
-- The menu provides Help, Supported Sources, Status, About and Privacy.
+The documented FastSaver `GET /v1/fetch` endpoint supports Instagram, TikTok, Pinterest, Facebook, X/Twitter, RuTube and Likee. YouTube uses `POST /v1/youtube/download`. Platform coverage and provider availability can change; private, deleted, login-protected, DRM-protected or restricted content is not bypassed.
 
-## Supported source status
+The default YouTube format is 720p. The backend supports audio and 144p–2160p if a format is supplied in the API request.
 
-| Source | Detection | Processing |
-|---|---|---|
-| Public direct HTTPS MP4 file URL | Yes | Configured through Telegram `sendVideo`; a successful live test is still required |
-| Facebook public video/Reel page | Yes | Not available in this Bots.Business-only build |
-| Instagram public Reel/post page | Yes | Not available in this Bots.Business-only build |
-| YouTube | Yes | Not supported |
+## Required Vercel environment variables
 
-A Facebook or Instagram post URL is a webpage, not a direct media file. Bots.Business can call Telegram's media methods and external HTTP services, but the current build does not include a configured and verified media-extraction provider. Do not claim Facebook/Instagram downloading works until an authorized provider is connected and tested. No private-account, login, DRM or access-control bypass is supported.
+Set these in Vercel Project Settings → Environment Variables for Production and Preview:
 
-## Direct MP4 flow
+- `FASTSAVER_API_KEY` — FastSaver API key.
+- `TELEGRAM_BOT_TOKEN` — BotFather token for the same Telegram bot.
+- `BOT_SHARED_SECRET` — long random secret shared with Bots.Business.
+- `ADMIN_CHAT_ID` — optional admin Telegram chat ID for failure alerts.
 
-1. The `*` command reads the incoming message text.
-2. It finds an HTTPS URL, including when the URL follows a slash command.
-3. It checks supported social domains and rejects unsupported page URLs.
-4. It only passes a direct URL ending in `.mp4` to Telegram.
-5. Telegram `sendVideo` is called with `on_result` and `on_error` callbacks.
-6. On success, Telegram's video message is the result. On failure, the bot sends a concise troubleshooting message.
+Do not send these secrets in chat or commit them to GitHub.
 
-Telegram must be able to access the URL. Telegram's file size, media format, and remote-host restrictions apply. An `.mp4` suffix alone does not guarantee that a remote server actually serves a valid video file.
+## Required Bots.Business bot properties
 
-## Commands
+Set these bot properties in Bots.Business:
 
-- `/start` — Welcome and menu
-- `/menu` — Main menu
-- `/help` — Instructions
-- `/supported` — Source availability
-- `/status` — Configured feature status
-- `/about` — About
-- `/privacy` — Privacy and safe-use information
-- `/download`, `/dl` — Legacy silent aliases; users do not need them
+- `BACKEND_URL` — the Vercel project URL (no trailing slash).
+- `BACKEND_SHARED_SECRET` — exactly the same value as Vercel `BOT_SHARED_SECRET`.
 
-## Required live tests
+The catch-all `*` command automatically forwards supported public links to the backend. The backend sends the final media to Telegram, so the Bots.Business five-second HTTP callback does not have to wait for media extraction to finish.
 
-After importing the latest Git version into Bots.Business, test:
+## API
 
-1. `/start` — one welcome/menu response.
-2. `/download` — no separate prompt.
-3. A public direct HTTPS MP4 URL — Telegram should send the video or invoke the failure callback.
-4. `/help https://example.com/video.mp4` — verify the catch-all handler receives URLs attached to commands.
-5. A public Facebook/Instagram post URL — the bot should explain that extraction is not connected.
+- `GET /api/health` — public health check.
+- `POST /api/download` — requires `X-Bot-Secret`; JSON body: `{ "url": "...", "chat_id": "..." }`.
 
-The status command deliberately says the direct-MP4 flow is configured but not live-confirmed until a real Telegram send succeeds.
+The download endpoint responds with HTTP 202 after scheduling background work. Vercel Function max duration is configured to 300 seconds. The function uses FastSaver's documented request patterns and Telegram Bot API sendPhoto/sendVideo/sendMediaGroup methods.
 
-## Safety and privacy
+## Setup checklist
 
-- Only process content the user owns or is authorized to save.
-- Do not bypass private-account restrictions, login protections, DRM, paywalls, or other access controls.
-- Never ask users for passwords, OTPs, cookies, or session tokens.
-- Do not commit Telegram tokens, API keys, cookies, or credentials to GitHub.
+1. Link this GitHub repository to a Vercel project.
+2. Add the four Vercel environment variables above.
+3. Redeploy after adding environment variables.
+4. Set `BACKEND_URL` and `BACKEND_SHARED_SECRET` as Bots.Business bot properties.
+5. Sync the updated GitHub commands into Bots.Business.
+6. Test `/api/health`, then a public video link that you own or have permission to save.
 
-## Bots.Business import warning
+## Important limitations
 
-Importing from Git can replace commands and installed libraries in the destination bot. Back up the current bot or test the import in a disposable bot first.
+- FastSaver free tier currently documents 10 requests/minute and 1,000 starting credits; actual balances and limits are controlled by FastSaver.
+- A FastSaver download URL is temporary. The backend sends it to Telegram immediately.
+- Telegram may reject files that exceed its current Bot API limits or whose CDN does not permit remote fetching.
+- Vercel Hobby functions have plan-specific duration and usage limits. Heavy production traffic may require a paid plan.
+- This is a single-provider integration, not yet an 8–10-provider failover system.
+- No private-account, login, cookie, DRM, paywall or access-control bypass is implemented.
