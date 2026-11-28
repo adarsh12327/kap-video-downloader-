@@ -1,0 +1,12 @@
+{
+  "name": "kap-video-downloader-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Secure server-side FastSaver bridge for KAP Video Downloader",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/functions": "^2.0.0"
+  }
+}
