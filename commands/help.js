@@ -14,14 +14,12 @@ Bot.sendInlineKeyboard([
   { title: "🏠 Main Menu", command: "/menu" }
 ], "📖 *KAP Video Downloader — Help*\n\n" +
   "*How to use*\n" +
-  "1. Copy a public direct HTTPS MP4 video-file URL.\n" +
-  "2. Paste it directly into this chat. You may also include the URL after a command.\n" +
-  "3. The bot asks Telegram to fetch and send the video.\n" +
-  "4. If Telegram cannot access the file or the file exceeds Telegram limits, an error message is shown.\n\n" +
-  "*Supported right now*\n" +
-  "🟢 Direct HTTPS MP4 file links — send flow configured.\n" +
-  "🟡 Facebook/Instagram post or Reel links — detected, but extraction is not connected.\n" +
-  "🔴 YouTube — not supported.\n\n" +
+  "1. Copy a supported public video link.\n" +
+  "2. Paste it directly into this chat. No /download command is needed.\n" +
+  "3. The bot sends the link to its secure backend.\n" +
+  "4. The backend processes it and sends the resulting media to this chat.\n\n" +
+  "*Supported platforms*\n" +
+  "Facebook, Instagram, TikTok, YouTube, Pinterest, X/Twitter, RuTube and Likee.\n\n" +
   "*Commands*\n" +
   "/start — Welcome\n" +
   "/menu — Main menu\n" +
@@ -30,4 +28,4 @@ Bot.sendInlineKeyboard([
   "/about — About this bot\n" +
   "/privacy — Privacy and safe use\n" +
   "/help — This guide\n\n" +
-  "⚠️ Only download content you own or are authorized to save. Private, login-protected and DRM-protected content is not supported.");
+  "⚠️ Only save content you own or are authorized to use. Private, login-protected and DRM-protected content is not supported.");
